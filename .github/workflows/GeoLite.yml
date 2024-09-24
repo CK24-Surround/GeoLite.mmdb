@@ -59,13 +59,13 @@ jobs:
         git checkout -b download
         git add .
         git commit -m "${{ env.TAG_NAME }}"
-        git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+        git remote add origin "https://${{ github.actor }}:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}"
         git push -f origin download
 
     - name: Upload to Releases
       uses: softprops/action-gh-release@master
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
       with:
         tag_name: ${{ env.TAG_NAME }}
         body: ${{ env.TAG_NAME }}
@@ -77,7 +77,7 @@ jobs:
         keep_latest: 2
         delete_tags: true
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@main
